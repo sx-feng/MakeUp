@@ -19,14 +19,13 @@
 <script>
 export default {
   name: "BottomNav",
-  // ✅ Vue3 自定义组件 v-model 默认对应：prop:modelValue + emit:update:modelValue
   props: {
     modelValue: {
       type: String,
-      default: 'shop'
+      default: "shop"
     }
   },
-  emits: ['update:modelValue'], // ✅ 很重要，Vue3 建议显式声明
+  emits: ["update:modelValue"],
   computed: {
     current() {
       return this.modelValue;
@@ -35,35 +34,40 @@ export default {
       return [
         {
           name: "shop",
-          label: "订单池",
-          icon: new URL('@/assets/dingdan.png', import.meta.url).href,
-          selectedIcon: new URL('@/assets/订单 (1).png', import.meta.url).href
+          label: "订单",
+          icon: new URL("@/assets/dingdan.png", import.meta.url).href,
+          selectedIcon: new URL("@/assets/订单 (1).png", import.meta.url).href
         },
         {
           name: "message",
-          label: "消息",                            
-          icon: new URL('@/assets/消息 (2).png', import.meta.url).href,
-          selectedIcon: new URL('@/assets/消息 (4).png', import.meta.url).href
+          label: "消息",
+          icon: new URL("@/assets/消息 (2).png", import.meta.url).href,
+          selectedIcon: new URL("@/assets/消息 (4).png", import.meta.url).href
         },
         {
           name: "discover",
           label: "发现",
-          icon: new URL('@/assets/发现.png', import.meta.url).href,
-          selectedIcon: new URL('@/assets/发现 (1).png', import.meta.url).href,
+          icon: new URL("@/assets/发现.png", import.meta.url).href,
+          selectedIcon: new URL("@/assets/发现 (1).png", import.meta.url).href
         },
         {
           name: "mine",
           label: "我的",
-          icon: new URL('@/assets/我的.png', import.meta.url).href,
-          selectedIcon: new URL('@/assets/我的 (3).png', import.meta.url).href,
+          icon: new URL("@/assets/我的.png", import.meta.url).href,
+          selectedIcon: new URL("@/assets/我的 (3).png", import.meta.url).href
+        },
+        {
+          name: "test",
+          label: "测试页",
+          icon: new URL("@/assets/avatar1.png", import.meta.url).href,
+          selectedIcon: new URL("@/assets/avatar2.png", import.meta.url).href
         }
       ];
     }
   },
   methods: {
     onClick(name) {
-      // ✅ 这句就是触发 v-model 更新的关键
-      this.$emit('update:modelValue', name);
+      this.$emit("update:modelValue", name);
     }
   }
 };
