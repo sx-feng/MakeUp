@@ -55,12 +55,6 @@ export default {
           label: "我的",
           icon: new URL("@/assets/我的.png", import.meta.url).href,
           selectedIcon: new URL("@/assets/我的 (3).png", import.meta.url).href
-        },
-        {
-          name: "test",
-          label: "测试页",
-          icon: new URL("@/assets/avatar1.png", import.meta.url).href,
-          selectedIcon: new URL("@/assets/avatar2.png", import.meta.url).href
         }
       ];
     }

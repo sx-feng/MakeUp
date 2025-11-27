@@ -21,22 +21,22 @@ export default {
 </script>
 
 <style>
-/* 整个应用全局样式 */
 .app-container {
   width: 100%;
-  max-width: 480px; /* 设置为适合手机设备 */
+  
   margin: 0 auto;
   background: #ffffff;
   min-height: 100vh;
   position: relative;
-  padding-bottom: 70px; /* 给底部导航预留空间 */
+  padding-bottom: 70px;
   box-sizing: border-box;
 }
+
 
 /* 去掉默认 margin 和 padding */
 body, html {
   margin: 0;
   padding: 0;
-  background: #f5f6fa;
+  background: #ffffff;
 }
 </style>
