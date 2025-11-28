@@ -47,11 +47,11 @@ export default {
         avatar: "/icons/image.png"
       },
       menu: [
-        { key: "order", name: "订单管理", icon: "/icons/订单.png" },
+        { key: "order", name: "订单管理", icon: "/icons/订单 (4).png" },
         { key: "service", name: "服务项目", icon: "/icons/服务项目.png" },
-        { key: "review", name: "客户评价", icon: "/icons/客户评价 (2).png", badge: 12 },
-        { key: "schedule", name: "预约日程", icon: "/icons/预约日程.png" },
-        { key: "income", name: "收入统计", icon: "/icons/收入统计.png" }
+        { key: "review", name: "客户评价", icon: "/icons/消息.png", badge: 12 },
+        { key: "schedule", name: "预约日程", icon: "/icons/日程.png" },
+        { key: "income", name: "收入统计", icon: "/icons/收入.png" }
       ]
     };
   },
@@ -71,6 +71,21 @@ export default {
     onSelect(item) {
       this.$router.push({ name: item.key });
     }
+  },
+  watch: {
+    currentTab(newName) {
+      if (newName && newName !== this.$route.name) {
+        this.$router.push({ name: newName });
+      }
+    },
+    $route: {
+      immediate: true,
+      handler(to) {
+        if (to.name && to.name !== this.currentTab) {
+          this.currentTab = to.name;
+        }
+      }
+    }
   }
 };
 </script>
@@ -78,9 +93,11 @@ export default {
 <style scoped>
 .mine-page {
   min-height: 100vh;
-  background: #fff;
-  padding: 0.75rem 0.75rem 5.5rem;
+  background: #ffffff;
+  padding: 0.5rem 0.75rem 5.5rem;
   box-sizing: border-box;
   position: relative;
+  max-width: 430px;
+  margin: 0 auto;
 }
 </style>

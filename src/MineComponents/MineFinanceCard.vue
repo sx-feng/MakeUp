@@ -28,7 +28,10 @@ export default {
 <style scoped>
 .finance-card {
   padding: 1rem;
-  margin-top: 0.75rem;
+  margin-top: 0.6rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 1rem;
+  background: #fff;
 }
 .finance-row {
   display: flex;
@@ -57,5 +60,6 @@ export default {
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
+  box-shadow: 0 12px 24px rgba(255, 79, 128, 0.25);
 }
 </style>

@@ -28,10 +28,12 @@ export default {
 .card {
   background: #fff;
   border-radius: 1rem;
+  border: 1px solid #f0f0f0;
+  box-shadow: none;
 }
 .info-card {
   padding: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 .user-row {
   display: flex;
@@ -43,6 +45,7 @@ export default {
   height: 4.5rem;
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: none;
 }
 .name-row {
   display: flex;

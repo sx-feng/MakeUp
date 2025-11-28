@@ -29,14 +29,20 @@ export default {
 
 <style scoped>
 .list-card {
-  padding: 0.4rem 0.4rem 0.2rem;
-  margin-top: 0.85rem;
+
+  margin-top: 0.75rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 1rem;
+  background: #fff;
 }
 .menu-item {
   display: flex;
   align-items: center;
-  padding: 0.75rem;
-  border-radius: 0.8rem;
+  padding: 0.6rem;
+  border-radius: 0.4rem;
+}
+.menu-item + .menu-item {
+  border-top: 1px solid #f2f2f2;
 }
 .item-left {
   display: flex;
