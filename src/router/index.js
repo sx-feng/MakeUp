@@ -16,7 +16,13 @@ const router = createRouter({
     { path: '/chat/:id', name: 'chat', component: ChatPage, props: true },
     { path: '/discover', name: 'discover', component: DiscoverPage },
     { path: '/publish', name: 'publish', component: PublishPage },
-    { path: '/mine', name: 'mine', component: MinePage }
+    { path: '/mine', name: 'mine', component: MinePage },
+    { 
+      path: '/work/:id', 
+      name: 'workDetail', 
+      component: () => import('@/pages/WorkDetail.vue'),
+      props: true 
+    }
   ]
 })
 
