@@ -14,18 +14,50 @@
     </div>
 
     <!-- 姓名 -->
-    <div class="field name-field">
-      <input class="name-input" v-model="form.name" @input="saveToLocal" />
-    </div>
+  <div class="field name-field">
+  <input class="name-input" v-model="form.name" @input="saveToLocal" />
+</div>
+
 
     <!-- 简介 -->
     <div class="field">
+      
       <textarea
         v-model="form.desc"
         @input="saveToLocal"
         placeholder="个人简介"
-      />
+      ></textarea>
     </div>
+
+    <!-- 作品列表 -->   
+    <!-- <h3>作品展示</h3>
+      <button class="new" @click="addWork">新增作品</button>
+    <div class="works">
+     <div v-for="(w,i) in form.works" :key="i" class="work-item">
+
+ 
+  <div class="upload-box">
+    <img v-if="w.img" :src="w.img" class="work-img" />
+    <div v-else class="plus">+</div>
+
+   
+ <input class="file-input" type="file" multiple accept="image/*" @change="e => uploadWorkImg(e,i)" />
+
+  </div>
+
+  <input v-model="w.title" @input="saveToLocal" placeholder="作品标题" />
+
+ <input v-model.number="w.likes" type="number" @input="saveToLocal" placeholder="点赞数" /> 
+
+  <span class="dele"  @click="removeWork(i)"><img src="/icons/删除.png" alt=""></span>
+
+</div>
+
+    </div> -->
+
+  
+
+    <!-- <button class="save-btn" @click="saveToLocal">保存主页</button> -->
 
     <!-- 底部导航 -->
     <BottomNav v-model="navTab" />
@@ -45,7 +77,7 @@ export default {
         avatar: "",
         cover: "",
         desc: "",
-        works: [] // ⭐ 保留逻辑，不动
+        works: []
       }
     };
   },
@@ -77,16 +109,20 @@ export default {
       const file = e.target.files[0];
       if (!file) return;
       this.form.avatar = await this.toBase64(file);
-      this.saveToLocal();
-    },
 
-    async uploadWorkImg(e, index) {
-      const files = Array.from(e.target.files);
-      if (!files.length) return;
-      // ⭐ 逻辑保留，只是页面暂时不用
-      this.form.works[index].img = await this.toBase64(files[0]);
       this.saveToLocal();
     },
+async uploadWorkImg(e, index) {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+
+  // ⭐ 只使用第一张
+  this.form.works[index].img = await this.toBase64(files[0]);
+
+  this.saveToLocal();
+}
+,
+
 
     addWork() {
       this.form.works.push({ img: "", title: "", likes: 0 });
@@ -120,11 +156,15 @@ export default {
   }
 };
 </script>
-
 <style scoped>
+
 .edit-page {
-  padding-top: 250px;
+  padding-top: 15.625rem; /* 250px */
+  padding-bottom: 4.25rem; /* 底部导航的安全距离 */
   position: relative;
+  min-height: 100vh;
+  overflow-x: hidden; /* 去掉横向滑动 */
+  background: #f7f7f7;
 }
 
 /* ====== 封面图 ====== */
@@ -133,7 +173,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: 220px;
+  height: 13.75rem; /* 220px */
   z-index: 1;
 }
 .cover-img {
@@ -145,57 +185,57 @@ export default {
 /* 封面上传按钮 */
 .cover-box input[type="file"] {
   position: absolute;
-  bottom: 10px;
-  right: 12px;
+  bottom: 0.625rem; /* 10px */
+  right: 0.75rem; /* 12px */
   opacity: 0;
-  width: 72px;
-  height: 72px;
+  width: 4.5rem; /* 72px */
+  height: 4.5rem; /* 72px */
   cursor: pointer;
-   z-index: 10;
+  z-index: 9999;
 }
 .cover-box::after {
   content: "更换封面";
   position: absolute;
-  bottom: 23px;
-  right: 18px;
+  bottom: 1.4375rem; /* 23px */
+  right: 1.125rem; /* 18px */
   background: rgba(0, 0, 0, 0.45);
   color: #fff;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
+  padding: 0.375rem 0.875rem; /* 6px 14px */
+  border-radius: 1.25rem; /* 20px */
+  font-size: 0.75rem; /* 12px */
 }
 
 /* ====== 头像 ====== */
 .avatar-box {
   position: absolute;
-  top: 120px;
+  top: 7.5rem; /* 120px */
   left: 15%;
   transform: translateX(-50%);
   z-index: 2;
 }
 .avatar {
-  width: 88px;
-  height: 88px;
+  width: 5.5rem; /* 88px */
+  height: 5.5rem; /* 88px */
   border-radius: 50%;
-  border: 3px solid #fff;
+  border: 0.1875rem solid #fff; /* 3px */
   object-fit: cover;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.15); /* 4px 16px */
 }
 .avatar-box input[type="file"] {
   position: absolute;
-  bottom: -5px;
-  right: calc(50% - 44px);
+  bottom: -0.3125rem; /* -5px */
+  right: calc(50% - 2.75rem); /* 44px */
   opacity: 0;
-  width: 88px;
-  height: 88px;
+  width: 5.5rem; /* 88px */
+  height: 5.5rem; /* 88px */
   cursor: pointer;
 }
 
 /* ====== 姓名输入框 ====== */
 .name-field {
   position: absolute;
-  top: 130px;
-  left: 50%;
+  top: 8.125rem; /* 130px */
+  left: 65%;
   transform: translateX(-40%);
   width: 60%;
   z-index: 5;
@@ -206,7 +246,7 @@ export default {
   color: #ffffff;
   border: none;
   outline: none;
-  padding: 8px 12px;
+  padding: 0.5rem 0.75rem; /* 8px 12px */
 }
 
 /* ====== 文本输入 ====== */
@@ -219,20 +259,107 @@ export default {
   -webkit-appearance: none;
 }
 .field {
-  width: 100%;
-  padding: 0 16px;
+  padding: 0 1rem; /* 16px */
   box-sizing: border-box;
 }
 
 .field textarea {
-  width: 100%;          /* ⭐ 让简介真正占满整个屏幕 */
-  min-height: 80px;
+  width: 100%;
+  min-height: 5rem; /* 80px */
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+  background: transparent;
   border: none;
   outline: none;
-  background: transparent;
   resize: none;
-  font-size: 14px;
-  line-height: 1.5;
+  box-sizing: border-box;
 }
+
+/* ====== 作品列表 ====== */
+h3 {
+  padding-left: 1.125rem; /* 18px */
+  margin-top: 0.625rem; /* 10px */
+  margin-bottom: 0.75rem; /* 12px */
+  font-size: 1rem; /* 16px */
+  font-weight: bold;
+  color: #333;
+}
+
+.works {
+  padding: 0 1rem; /* 16px */
+}
+
+.work-item {
+  background: #fff;
+  padding: 0.75rem; /* 12px */
+  border-radius: 0.875rem; /* 14px */
+  margin-bottom: 1rem; /* 16px */
+  box-shadow: 0 0.1875rem 0.75rem rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+/* 上传容器 */
+.upload-box {
+  position: relative;
+  width: 100%;
+  height: 11.25rem; /* 180px */
+  background: #f3f3f3;
+  border-radius: 0.75rem; /* 12px */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus {
+  font-size: 3rem; /* 48px */
+  color: #ccc;
+  font-weight: 300;
+}
+
+.work-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.work-item input[type="text"] {
+  margin-top: 0.625rem; /* 10px */
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1rem; /* 16px */
+  padding: 0.375rem 0; /* 6px */
+  color: #333;
+}
+
+/* 删除按钮 */
+.dele {
+  position: absolute;
+  top: 9.375rem; /* 150px */
+  right: 0.625rem; /* 10px */
+  width: 2rem; /* 32px */
+  height: 2rem; /* 32px */
+  backdrop-filter: blur(0.25rem); /* 4px */
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.dele img {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
 
 </style>
