@@ -43,6 +43,36 @@
       <PublishButton @click="goPublish" />
     </div>
 
+    <!-- 作品列表 -->   
+    <!-- <h3>作品展示</h3>
+      <button class="new" @click="addWork">新增作品</button>
+    <div class="works">
+     <div v-for="(w,i) in form.works" :key="i" class="work-item">
+
+ 
+  <div class="upload-box">
+    <img v-if="w.img" :src="w.img" class="work-img" />
+    <div v-else class="plus">+</div>
+
+   
+ <input class="file-input" type="file" multiple accept="image/*" @change="e => uploadWorkImg(e,i)" />
+
+  </div>
+
+  <input v-model="w.title" @input="saveToLocal" placeholder="作品标题" />
+
+ <input v-model.number="w.likes" type="number" @input="saveToLocal" placeholder="点赞数" /> 
+
+  <span class="dele"  @click="removeWork(i)"><img src="/icons/删除.png" alt=""></span>
+
+</div>
+
+    </div> -->
+
+  
+
+    <!-- <button class="save-btn" @click="saveToLocal">保存主页</button> -->
+
     <!-- 底部导航 -->
       <WorksGrid
         :list="works"
@@ -71,6 +101,7 @@ export default {
         cover: "",
         desc: "",
         works: []
+     
       }
     };
   },
@@ -102,6 +133,7 @@ export default {
       const file = e.target.files[0];
       if (!file) return;
       this.form.avatar = await this.toBase64(file);
+
 
       this.saveToLocal();
     },
@@ -154,6 +186,7 @@ export default {
 };
 </script>
 <style scoped>
+
 
 .edit-page {
   padding-top: 14.8rem; /* 250px */
@@ -273,6 +306,68 @@ export default {
   min-height: 3.2rem;
   border: none;
   outline: none;
+  resize: none;
+  box-sizing: border-box;
+}
+
+/* ====== 作品列表 ====== */
+h3 {
+  padding-left: 1.125rem; /* 18px */
+  margin-top: 0.625rem; /* 10px */
+  margin-bottom: 0.75rem; /* 12px */
+  font-size: 1rem; /* 16px */
+  font-weight: bold;
+  color: #333;
+}
+
+.works {
+  padding: 0 1rem; /* 16px */
+}
+
+.work-item {
+  background: #fff;
+  padding: 0.75rem; /* 12px */
+  border-radius: 0.875rem; /* 14px */
+  margin-bottom: 1rem; /* 16px */
+  box-shadow: 0 0.1875rem 0.75rem rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+/* 上传容器 */
+.upload-box {
+  position: relative;
+  width: 100%;
+  height: 11.25rem; /* 180px */
+  background: #f3f3f3;
+  border-radius: 0.75rem; /* 12px */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plus {
+  font-size: 3rem; /* 48px */
+  color: #ccc;
+  font-weight: 300;
+}
+
+.work-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.work-item input[type="text"] {
+  margin-top: 0.625rem; /* 10px */
+  width: 100%;
   background: transparent;
   resize: none;
   font-size: 0.95rem;
