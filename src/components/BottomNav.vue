@@ -1,7 +1,26 @@
 <template>
   <div class="bottom-nav">
     <div
-      v-for="item in tabs"
+      v-for="item in leftTabs"
+      :key="item.name"
+      class="nav-item"
+      :class="{ active: current === item.name }"
+      @click="onClick(item.name)"
+    >
+      <img
+        :src="current === item.name ? item.selectedIcon : item.icon"
+        class="nav-icon"
+      />
+      <div class="nav-text">{{ item.label }}</div>
+    </div>
+
+    <div class="publish-wrapper" :class="{ active: current === 'publish' }">
+      <PublishButton :active="current === 'publish'" @click="onPublish" />
+      <div class="nav-text publish-label">发布</div>
+    </div>
+
+    <div
+      v-for="item in rightTabs"
       :key="item.name"
       class="nav-item"
       :class="{ active: current === item.name }"
@@ -17,8 +36,11 @@
 </template>
 
 <script>
+import PublishButton from "./PublishButton.vue";
+
 export default {
   name: "BottomNav",
+  components: { PublishButton },
   props: {
     modelValue: {
       type: String,
@@ -57,11 +79,20 @@ export default {
           selectedIcon: new URL("@/assets/我的 (3).png", import.meta.url).href
         }
       ];
+    },
+    leftTabs() {
+      return this.tabs.slice(0, 2);
+    },
+    rightTabs() {
+      return this.tabs.slice(2);
     }
   },
   methods: {
     onClick(name) {
       this.$emit("update:modelValue", name);
+    },
+    onPublish() {
+      this.$emit("update:modelValue", "publish");
     }
   }
 };
@@ -98,5 +129,22 @@ export default {
   width: 1.5rem;
   height: 1.5rem;
   margin-bottom: 0.25rem;
+}
+
+.publish-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.publish-label {
+  color: #999;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.publish-wrapper.active .publish-label {
+  color: #ff3b6b;
 }
 </style>

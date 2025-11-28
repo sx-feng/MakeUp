@@ -5,6 +5,7 @@ import MessagePage from '@/pages/MessagePage.vue'
 import ChatPage from '@/pages/ChatPage.vue'
 import DiscoverPage from '@/pages/DiscoverPage.vue'
 import MinePage from '@/pages/MinePage.vue'
+import PublishPage from '@/pages/PublishPage.vue'
 
 
 const router = createRouter({
@@ -14,6 +15,7 @@ const router = createRouter({
     { path: '/message', name: 'message', component: MessagePage },
     { path: '/chat/:id', name: 'chat', component: ChatPage, props: true },
     { path: '/discover', name: 'discover', component: DiscoverPage },
+    { path: '/publish', name: 'publish', component: PublishPage },
     { path: '/mine', name: 'mine', component: MinePage }
   ]
 })

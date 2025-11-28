@@ -14,46 +14,18 @@
     </div>
 
     <!-- 姓名 -->
-  <div class="field name-field">
-  <input class="name-input" v-model="form.name" @input="saveToLocal" />
-</div>
-
+    <div class="field name-field">
+      <input class="name-input" v-model="form.name" @input="saveToLocal" />
+    </div>
 
     <!-- 简介 -->
     <div class="field">
-      
-      <textarea v-model="form.desc" @input="saveToLocal"  placeholder="个人简介"/>
+      <textarea
+        v-model="form.desc"
+        @input="saveToLocal"
+        placeholder="个人简介"
+      />
     </div>
-
-    <!-- 作品列表 -->   
-    <h3>作品展示</h3>
-      <button class="new" @click="addWork">新增作品</button>
-    <div class="works">
-     <div v-for="(w,i) in form.works" :key="i" class="work-item">
-
-  <!-- 点击区域（已有图片显示图片，否则显示加号） -->
-  <div class="upload-box">
-    <img v-if="w.img" :src="w.img" class="work-img" />
-    <div v-else class="plus">+</div>
-
-    <!-- 隐藏的文件选择框 -->
- <input class="file-input" type="file" multiple accept="image/*" @change="e => uploadWorkImg(e,i)" />
-
-  </div>
-
-  <input v-model="w.title" @input="saveToLocal" placeholder="作品标题" />
-
-  <!-- <input v-model.number="w.likes" type="number" @input="saveToLocal" placeholder="点赞数" /> -->
-
-  <span class="dele"  @click="removeWork(i)"><img src="/icons/删除.png" alt=""></span>
-
-</div>
-
-    </div>
-
-  
-
-    <!-- <button class="save-btn" @click="saveToLocal">保存主页</button> -->
 
     <!-- 底部导航 -->
     <BottomNav v-model="navTab" />
@@ -73,7 +45,7 @@ export default {
         avatar: "",
         cover: "",
         desc: "",
-        works: []
+        works: [] // ⭐ 保留逻辑，不动
       }
     };
   },
@@ -105,20 +77,16 @@ export default {
       const file = e.target.files[0];
       if (!file) return;
       this.form.avatar = await this.toBase64(file);
-
       this.saveToLocal();
     },
-async uploadWorkImg(e, index) {
-  const files = Array.from(e.target.files);
-  if (!files.length) return;
 
-  // ⭐ 只使用第一张
-  this.form.works[index].img = await this.toBase64(files[0]);
-
-  this.saveToLocal();
-}
-,
-
+    async uploadWorkImg(e, index) {
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+      // ⭐ 逻辑保留，只是页面暂时不用
+      this.form.works[index].img = await this.toBase64(files[0]);
+      this.saveToLocal();
+    },
 
     addWork() {
       this.form.works.push({ img: "", title: "", likes: 0 });
@@ -152,8 +120,8 @@ async uploadWorkImg(e, index) {
   }
 };
 </script>
-<style scoped>
 
+<style scoped>
 .edit-page {
   padding-top: 250px;
   position: relative;
@@ -183,6 +151,7 @@ async uploadWorkImg(e, index) {
   width: 72px;
   height: 72px;
   cursor: pointer;
+   z-index: 10;
 }
 .cover-box::after {
   content: "更换封面";
@@ -249,121 +218,21 @@ async uploadWorkImg(e, index) {
   box-shadow: none !important;
   -webkit-appearance: none;
 }
-.field textarea {
-  resize: none;
-  padding-left: 2rem;
-}
-
-/* ====== 作品列表 ====== */
-h3 {
-  padding-left: 18px;
-  margin-top: 10px;
-  margin-bottom: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-}
-
-.works {
+.field {
+  width: 100%;
   padding: 0 16px;
+  box-sizing: border-box;
 }
 
-.work-item {
-  background: #fff;
-  padding: 12px;
-  border-radius: 14px;
-  margin-bottom: 16px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
-  position: relative;
-}
-
-/* 上传容器（固定高度，防止图片变小） */
-.upload-box {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  background: #f3f3f3;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 加号样式 */
-.plus {
-  font-size: 48px;
-  color: #ccc;
-  font-weight: 300;
-}
-
-/* 作品图（统一高度100%填满容器） */
-.work-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 隐藏真实文件按钮 */
-.file-input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-/* 标题输入框 */
-.work-item input[type="text"] {
-  margin-top: 10px;
-  width: 100%;
-  background: transparent;
+.field textarea {
+  width: 100%;          /* ⭐ 让简介真正占满整个屏幕 */
+  min-height: 80px;
   border: none;
   outline: none;
-  font-size: 16px;
-  padding: 6px 0;
-  color: #333;
-}
-
-/* 删除按钮 */
-.dele {
-  position: absolute;
-  top: 150px;
-  right: 10px;
-  width: 32px;
-  height: 32px;
-  backdrop-filter: blur(4px);
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.dele img {
-  width: 1.4rem;
-  height: 1.4rem;
-}
-
-/* ===== 新增按钮 ===== */
-button {
-  margin: 10px auto;
-  display: block;
-  background: #ff4d6a;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 30px;
+  background: transparent;
+  resize: none;
   font-size: 14px;
-  cursor: pointer;
+  line-height: 1.5;
 }
-.new {
-  margin: 10px 0 16px 18px;
-  background: linear-gradient(90deg, #ff7aa5, #ff4d79);
-  padding: 8px 18px;
-  font-weight: 600;
-  border-radius: 25px;
-  box-shadow: 0 3px 8px rgba(255, 80, 120, 0.25);
-}
-
 
 </style>
